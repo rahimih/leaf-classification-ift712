@@ -1,0 +1,4 @@
+model_key,model_name,best_params,accuracy,precision_macro,recall_macro,f1_macro
+logistic_regression,Logistic Regression (Hadi),"{""clf__C"": 10.0, ""clf__penalty"": ""l2""}",0.9949494949494949,0.9966329966329965,0.9949494949494949,0.9946127946127946
+knn,K-Nearest Neighbors (Hadi),"{""clf__n_neighbors"": 3, ""clf__weights"": ""distance""}",0.9747474747474747,0.9831649831649831,0.9747474747474747,0.973063973063973
+random_forest,Random Forest (Hadi),"{""clf__max_depth"": null, ""clf__min_samples_split"": 5, ""clf__n_estimators"": 200}",0.9797979797979798,0.9865319865319865,0.9797979797979798,0.9794612794612795
