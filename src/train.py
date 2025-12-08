@@ -16,7 +16,7 @@ from .evaluation import compute_metrics
 from .models import get_all_models
 
 
-def run():
+def run_experiment():
     X, y = load_train_data()
     X_train, X_val, y_train, y_val = train_validation_split(X, y)
 
@@ -26,33 +26,49 @@ def run():
 
     RESULTS_DIR.mkdir(exist_ok=True)
 
-    cv = StratifiedKFold(n_splits=N_FOLDS, shuffle=True, random_state=RANDOM_STATE)
+    cv = StratifiedKFold(
+        n_splits=N_FOLDS, 
+        shuffle=True, 
+        random_state=RANDOM_STATE
+        )
     rows = []
 
-    for key, m in models.items():
-        print(f"Training {m.name}")
+    for key, cfg in models.items():
+        print(f"\n=== Training {cfg.name} ({key}) ===")
 
-        pipe = Pipeline([
-            ("scaler", StandardScaler()),
-            ("clf", m.estimator),
-        ])
+        pipe = Pipeline(
+            steps=[
+                ("scaler", StandardScaler()),
+                ("clf", cfg.estimator),
+            ]
+        )
 
-        grid = GridSearchCV(pipe, m.param_grid, cv=cv, n_jobs=N_JOBS, scoring="accuracy")
+        grid = GridSearchCV(
+            estimator=pipe,
+            param_grid=cfg.param_grid,
+            cv=cv,
+            n_jobs=N_JOBS,
+            scoring="accuracy",
+            verbose=1,
+        )
         grid.fit(X_train, y_train)
 
         y_pred = grid.predict(X_val)
         metrics = compute_metrics(y_val, y_pred)
 
         rows.append({
-            "model": m.name,
+            "model_key": key,
+            "model_name": cfg.name,
             "best_params": json.dumps(grid.best_params_),
             **metrics
         })
 
     df = pd.DataFrame(rows)
-    df.to_csv(RESULTS_DIR / "model_metrics.csv", index=False)
+    out_path = RESULTS_DIR / "model_metrics.csv"
+    df.to_csv(out_path, index=False)
     print(df)
 
+    return df
 
 if __name__ == "__main__":
-    run()
+    run_experiment()
