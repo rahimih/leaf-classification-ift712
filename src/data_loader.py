@@ -17,3 +17,4 @@ def load_train_data() -> Tuple[pd.DataFrame, pd.Series]:
 def load_test_data() -> pd.DataFrame:
     df = pd.read_csv(TEST_CSV)
     return df.drop(columns=["id"])
+    return X_test

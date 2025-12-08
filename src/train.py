@@ -5,11 +5,11 @@ Models will be added from branches.
 
 import json
 import pandas as pd
+from sklearn.model_selection import GridSearchCV, StratifiedKFold
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
-from sklearn.model_selection import GridSearchCV, StratifiedKFold
 
-from .config import RESULTS_DIR, N_FOLDS, N_JOBS, RANDOM_STATE
+from .config import N_FOLDS, N_JOBS, RANDOM_STATE, RESULTS_DIR
 from .data_loader import load_train_data
 from .preprocessing import train_validation_split
 from .evaluation import compute_metrics
@@ -22,7 +22,7 @@ def run_experiment():
 
     models = get_all_models()
     if not models:
-        raise RuntimeError("No models found. Implement models in feature branches.")
+        raise RuntimeError("No models registered in get_all_models().")
 
     RESULTS_DIR.mkdir(exist_ok=True)
 
@@ -60,7 +60,7 @@ def run_experiment():
             "model_key": key,
             "model_name": cfg.name,
             "best_params": json.dumps(grid.best_params_),
-            **metrics
+            **metrics,
         })
 
     df = pd.DataFrame(rows)
