@@ -27,11 +27,10 @@ def run_experiment():
     RESULTS_DIR.mkdir(exist_ok=True)
 
     cv = StratifiedKFold(
-        n_splits=N_FOLDS,
-        shuffle=True,
-        random_state=RANDOM_STATE,
-    )
-
+        n_splits=N_FOLDS, 
+        shuffle=True, 
+        random_state=RANDOM_STATE
+        )
     rows = []
 
     for key, cfg in models.items():
@@ -52,7 +51,6 @@ def run_experiment():
             scoring="accuracy",
             verbose=1,
         )
-
         grid.fit(X_train, y_train)
 
         y_pred = grid.predict(X_val)
@@ -68,13 +66,9 @@ def run_experiment():
     df = pd.DataFrame(rows)
     out_path = RESULTS_DIR / "model_metrics.csv"
     df.to_csv(out_path, index=False)
-
-    print(f"\nSaved results to: {out_path}")
     print(df)
 
     return df
 
-
 if __name__ == "__main__":
     run_experiment()
-

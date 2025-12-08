@@ -1,4 +1,7 @@
 model_key,model_name,best_params,accuracy,precision_macro,recall_macro,f1_macro
+gradient_boosting,Gradient Boosting (Sara),"{""clf__learning_rate"": 0.1, ""clf__max_depth"": 3, ""clf__n_estimators"": 100}",0.6111111111111112,0.6318181818181818,0.6111111111111112,0.5886483886483886
+svm,SVM RBF (Sara),"{""clf__C"": 10.0, ""clf__gamma"": 0.001, ""clf__kernel"": ""rbf""}",0.98989898989899,0.9932659932659934,0.98989898989899,0.9892255892255892
+gaussian_nb,Gaussian Naive Bayes (Sara),"{""clf__var_smoothing"": 1e-07}",0.6212121212121212,0.6305675805675806,0.6212121212121212,0.5887045053711721
 logistic_regression,Logistic Regression (Hadi),"{""clf__C"": 10.0, ""clf__penalty"": ""l2""}",0.9949494949494949,0.9966329966329965,0.9949494949494949,0.9946127946127946
 knn,K-Nearest Neighbors (Hadi),"{""clf__n_neighbors"": 3, ""clf__weights"": ""distance""}",0.9747474747474747,0.9831649831649831,0.9747474747474747,0.973063973063973
 random_forest,Random Forest (Hadi),"{""clf__max_depth"": null, ""clf__min_samples_split"": 5, ""clf__n_estimators"": 200}",0.9797979797979798,0.9865319865319865,0.9797979797979798,0.9794612794612795
